@@ -18,7 +18,7 @@ def bisseccao(f , a , b , eps=1e-8 , max_iter=200):
     if f(a) * f(b) >= 0:
         raise ValueError("O produto f(a) * f(b) não é menor que 0.")
 
-    #Definicao de intervalos
+    # Definicao de intervalos
     inicio = a
     fim = b
 
@@ -30,7 +30,7 @@ def bisseccao(f , a , b , eps=1e-8 , max_iter=200):
             print("Convergência não alcançada.")
             return (x, historico)
 
-        #Definição dos Xk e Xk-1 junto do Erro
+        # Definição dos Xk e Xk-1 junto do Erro
         if (k == 1):
             antigo_x = 0
             x = (inicio + fim)/2
@@ -40,22 +40,22 @@ def bisseccao(f , a , b , eps=1e-8 , max_iter=200):
             x = (inicio + fim)/2
             erro = np.absolute(x - antigo_x)
 
-        #Comparacões para retornar valor da raiz ou passar para a próxima análise
-        if (f(x) == 0 or (fim - inicio) < eps):
+        # Comparacões para retornar valor da raiz ou passar para a próxima análise
+        if (f(x) == 0):
             add_historico(historico, k, x, f(x), erro)
             return (x, historico)
-
-        if (f(a)*f(x) < 0):
-            add_historico(historico, k, x, f(x), erro)
+        elif (f(a)*f(x) < 0):
             fim = x
         else:
-            add_historico(historico, k, x, f(x), erro)
             inicio = x
 
+        add_historico(historico, k, x, f(x), erro)
+        if ((fim - inicio) < eps):
+            return (x, historico)
+
 #Teste Bissecção
-def funcao_teste(x):
-    return (x**2 - 1)
-print(bisseccao(funcao_teste, 0, 2))
+# f = lambda x: (x**2 - 1)
+# print(bisseccao(f, 0, 2))
 
 
 # ========= Gabriel =========
@@ -85,14 +85,13 @@ def newton(f, df, x0, eps=1e-8, max_iter =200):
     print("Não convergiu: número máximo de iterações atingido.")
     return x_atual
 
-# teste
-raiz = newton(
-    f="x**3 - 2",
-    df="3**2",
-    x0=1
-)
-
-print(raiz)
+# # teste
+# raiz = newton(
+#     f="x**3 - 2",
+#     df="3**2",
+#     x0=1
+# )
+# print(raiz)
 
 
 # ========= () =========
